@@ -3,8 +3,8 @@ package stepDefinitions;
 import org.junit.Assert;
 
 import cucumber.TestContext;
-import cucumber.api.java.en.Then;
 import enums.Context;
+import io.cucumber.java.en.Then;
 import pageObjects.ConfirmationPage;
 
 public class ConfirmationPageSteps {

@@ -1,7 +1,7 @@
 package stepDefinitions;
 
 import cucumber.TestContext;
-import cucumber.api.java.en.When;
+import io.cucumber.java.en.When;
 import managers.FileReaderManager;
 import pageObjects.CheckoutPage;
 import testDataTypes.Customer;
