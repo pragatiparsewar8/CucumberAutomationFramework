@@ -17,11 +17,6 @@
     </classes>
   </test>
 
-  <!-- Optional: rerun failed scenarios runner -->
-  <test name="Failed Cucumber Tests">
-    <classes>
-      <class name="runners.FailedTestRunner"/>
-    </classes>
-  </test>
+ 
 
 </suite>
