@@ -1,0 +1,66 @@
+name: Phoenix Test Automation Workflow
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+  workflow_dispatch:
+    inputs:
+      env:
+        description: "Environment"
+        type: choice
+        options: [qa, uat, dev]
+        default: qa
+        required: true
+      suiteXmlFile:
+        description: "TestNG Xml File"
+        type: choice
+        options: [testng.xml, smoke.xml, regression.xml, testng-datadriven.xml]
+        default: testng.xml
+        required: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+
+    - name: Create .env file
+      run: |
+        echo "DB_URL=${{ secrets.DB_URL }}" >> .env
+        echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
+        echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+
+    - name: Default values for Execution
+      id: default
+      run: |
+        echo "suiteXmlFile=${{ github.event.inputs.suiteXmlFile || 'testng.xml' }}" >> $GITHUB_OUTPUT
+        echo "env=${{ github.event.inputs.env || 'qa' }}" >> $GITHUB_OUTPUT
+
+    - name: Run Cucumber + TestNG Suite
+      run: mvn clean test -DsuiteXmlFile="${{ steps.default.outputs.suiteXmlFile }}" -Denv="${{ steps.default.outputs.env }}"
+
+    - name: Upload Cucumber HTML Report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: cucumber-html-report
+        path: target/cucumber-html-reports/
+        retention-days: 10
+
+    - name: Publish Cucumber Report to GitHub Pages
+      if: always()
+      uses: peaceiris/actions-gh-pages@v4.0.0
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: target/cucumber-html-reports
