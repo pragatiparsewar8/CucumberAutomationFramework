@@ -4,6 +4,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 
@@ -16,7 +17,8 @@ public class WebdriverManager {
 	private static DriverType driverType;
 	private static EnvironmentType environmentType;
 	private static final String CHROME_DRIVER_PROPERTY = "webdriver.chrome.driver";
-
+	private static final ChromeOptions options = new ChromeOptions();
+	
 	public WebdriverManager() {
 		driverType = FileReaderManager.getInstance().getConfigReader().getBrowser();
 		environmentType = FileReaderManager.getInstance().getConfigReader().getEnvironment();
@@ -47,7 +49,13 @@ public class WebdriverManager {
 	    	break;
         case CHROME : 
         	 WebDriverManager.chromedriver().setup();
-        	driver = new ChromeDriver();
+        	 options.addArguments("--headless"); // run without UI
+        		options.addArguments("--no-sandbox"); // required in CI
+        		options.addArguments("--disable-dev-shm-usage"); // avoid /dev/shm issues
+        		options.addArguments("--disable-gpu"); // safe on Linux
+        		options.addArguments("--remote-allow-origins=*"); // needed for newer ChromeDriver
+
+        	driver = new ChromeDriver(options);
     		break;
         case INTERNETEXPLORER : driver = new InternetExplorerDriver();
     		break;
