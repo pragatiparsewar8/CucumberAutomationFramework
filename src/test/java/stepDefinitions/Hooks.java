@@ -41,23 +41,7 @@ public class Hooks {
 	
 	@AfterStep
 	public void addScreenshot(Scenario scenario) {
-	    WebDriver driver = testContext.getWebDriverManager().getDriver();
-
-	    // Capture screenshot
-	    String base64Screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
-
-	    // ✅ Attach to Cucumber report
-	    scenario.attach(base64Screenshot.getBytes(), "image/png", "Step Screenshot");
-
-	    // ✅ Attach to Extent Spark report
-	    ExtentTest test = ExtentTestManager.getTest(); // current Extent test
-	    if (scenario.isFailed()) {
-	        test.fail("Step failed: " + scenario.getName())
-	            .addScreenCaptureFromBase64String(base64Screenshot, "Failed Step Screenshot");
-	    } else {
-	        test.info("Step passed")
-	            .addScreenCaptureFromBase64String(base64Screenshot, "Step Screenshot");
-	    }
+	   
 	}
 
 }
