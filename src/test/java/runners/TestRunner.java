@@ -9,7 +9,7 @@ import io.cucumber.testng.CucumberOptions;
 @CucumberOptions(
     features = "src/test/resources/functionalTests",   // ✅ correct path
     glue = {"stepDefinitions"},                        // ✅ matches your package
-    plugin = {"pretty", "html:target/cucumber-reports.html",
+    plugin = {"pretty", "html:target/cucumber-html-reports/cucumber-reports.html",
               "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"},
     monochrome = true
 )
