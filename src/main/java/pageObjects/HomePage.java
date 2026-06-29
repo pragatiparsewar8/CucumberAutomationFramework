@@ -15,7 +15,7 @@ public class HomePage extends BasePage{
 	}
 	
 	public void perform_Search(String search) {
-		logger.info("Navigating to Home Page");
+		
 		driver.navigate().to("https://shop.demoqa.com/?s=" + search + "&post_type=product");
 	}
 	
