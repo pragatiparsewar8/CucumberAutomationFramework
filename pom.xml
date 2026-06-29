@@ -100,7 +100,7 @@
 				<configuration>
 					<!-- Point to your TestNG suite file -->
 					<suiteXmlFiles>
-						<suiteXmlFile>${testng.xml}</suiteXmlFile>
+						<suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
 					</suiteXmlFiles>
 					<!-- Optional: system properties for env -->
 					<systemPropertyVariables>
