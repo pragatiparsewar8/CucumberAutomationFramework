@@ -11,10 +11,13 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
-public class ConfirmationPage {
+import com.framework.base.BasePage;
+
+public class ConfirmationPage extends BasePage {
 	WebDriver driver;
 	
 	public ConfirmationPage(WebDriver driver) {
+		super(driver);
 		this.driver = driver;
 	    PageFactory.initElements(driver, this);
 	}

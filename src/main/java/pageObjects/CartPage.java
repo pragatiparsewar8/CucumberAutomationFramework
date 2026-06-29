@@ -6,16 +6,19 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
-public class CartPage {
+import com.framework.base.BasePage;
+
+public class CartPage extends BasePage{
 	
 	public CartPage(WebDriver driver) {
+		super(driver);
 		PageFactory.initElements(driver, this);
 	}
 	
 	@FindBy(how = How.CSS, using = ".cart-button") 
 	private WebElement btn_Cart;
 	
-	@FindBy(how = How.CSS, using = ".checkout-button.alt") 
+	@FindBy(how = How.XPATH, using = ".checkout-button.alt") 
 	private WebElement btn_ContinueToCheckout;
 	
 	
